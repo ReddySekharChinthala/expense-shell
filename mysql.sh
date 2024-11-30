@@ -9,6 +9,9 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+echo "please enter the password:"
+read -s "ExpenseApp@1"
+
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
