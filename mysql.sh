@@ -50,5 +50,5 @@ then
     mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
     VALIDATE $? "MySQL_Root_Password_SetUP"
 else
-    echo "mysql root setup password is alread set..$G SKIPPING $N" 
+    echo -e "mysql root setup password is alread set..$G SKIPPING $N" 
 fi
