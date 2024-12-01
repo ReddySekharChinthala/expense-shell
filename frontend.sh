@@ -27,24 +27,6 @@ else
     echo "You are super user."
 fi
 
-dnf module disable nodejs -y &>>$LOGFILE
-VALIDATE $? "Disabling default nodejs"
-
-dnf module enable nodejs:20 -y &>>$LOGFILE
-VALIDATE $? "Enabling nodejs:20 version"
-
-dnf install nodejs -y &>>$LOGFILE
-VALIDATE $? "Installing nodejs"
-
-id expense &>>$LOGFILE
-if [ $? -ne 0 ]
-then
-    useradd expense &>>$LOGFILE
-    VALIDATE $? "Creating expense user"
-else
-    echo -e "User already exist..$Y SKIPPING $N"
-fi
-
 dnf install nginx -y 
 VALIDATE $? "Installing nginx"
 
