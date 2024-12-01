@@ -9,8 +9,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-# echo "please enter the password:"
-# read -s mysql_root_password
+echo "please enter the password:"
+read mysql_root_password
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -47,4 +47,8 @@ then
 else
     echo -e "User already exist..$Y SKIPPING $N"
 fi
+
+# below -p is to check whether exist app directory is there are not if its there it will ignore, otherwise it will give error.
+mkdir -p /app
+VALIDATE $? "Creating app directory"
 
