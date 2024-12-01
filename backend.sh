@@ -9,8 +9,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-echo "please enter the password:"
-read -s mysql_root_password
+# echo "please enter the password:"
+# read -s mysql_root_password
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -30,19 +30,19 @@ else
     echo "You are super user."
 fi
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$LOGFILE
 VALIDATE $? "Disabling default nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOGFILE
 VALIDATE $? "Enabling nodejs:20 version"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs"
 
-id expense
+id expense &>>$LOGFILE
 if [ $? -ne 0 ]
 then
-    useradd expense
+    useradd expense &>>$LOGFILE
     VALIDATE $? "Creating expense user"
 else
     echo "User already exist..$Y SKIPPING $N"
