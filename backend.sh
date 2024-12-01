@@ -9,8 +9,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-# echo "please enter the password:"
-# read mysql_root_password
+echo "please enter the password:"
+read mysql_root_password
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -63,5 +63,24 @@ VALIDATE $? "Extracted backend code"
 npm install &>>$LOGFILE
 VALIDATE $? "Installing nodejs dependencies"
 
+#here if we check in putty shell for pwd the below path will come and after 2nd path from etc/ copied from doc
+cp /home/ec2-user/expense-shell/backend.service etc/systemd/system/backend.service &>>$LOGFILE
+VALIDATE $? "Copied backed service"
 
+systemctl daemon-reload &>>$LOGFILE
+VALIDATE $? "Daemon reloading"
 
+systemctl start backend &>>$LOGFILE
+VALIDATE $? "Starting backend service"
+
+systemctl enable backend &>>$LOGFILE
+VALIDATE $? "Enabling backend service"
+
+dnf install mysql -y &>>$LOGFILE
+VALIDATE $? "Installing mysql schemas"
+
+mysql -h db.rsdevops78s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+VALIDATE $? "Schema loading"
+
+systemctl restart backend &>>$LOGFILE
+VALIDATE $? "Restarting backend service"
